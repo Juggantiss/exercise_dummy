@@ -22,15 +22,61 @@
       style="display: flex; width: 500px; height: 500px; flex-direction: column"
       id="chart_section"
     >
-      <h2></h2>
-      <canvas id="myChart" width="400" height="400"></canvas>
+      <h2>Emisores</h2>
+      <div id="container">
+        <canvas id="myChart" width="400" height="400"></canvas>
+      </div>
+      <label for="emisor">Emisor</label>
+      <input type="checkbox" name="emisor" id="emisor" checked />
+      <label for="tipoevento">Tipo de evento</label>
+      <input type="checkbox" name="tipoevento" id="tipoevento" />
+      <label for="mediopago">Medio de pago</label>
+      <input type="checkbox" name="mediopago" id="mediopago" />
     </section>
   </body>
   <script type="text/javascript">
     $(document).ready(function (e) {
-      $("h2").append("Emisores");
+      dibujarGrafica("emisor");
+      $("#emisor").click(function () {
+        var check = $("#emisor").is(":checked");
+        if (check) {
+          $("#tipoevento").prop("checked", false);
+          $("#mediopago").prop("checked", false);
+          limpiarLienzo("Emisores");
+          dibujarGrafica("emisor");
+        }
+      });
+      $("#tipoevento").click(function () {
+        var check = $("#tipoevento").is(":checked");
+        if (check) {
+          $("#emisor").prop("checked", false);
+          $("#mediopago").prop("checked", false);
+          limpiarLienzo("Tipo de evento");
+          dibujarGrafica("tipoevento");
+        }
+      });
+      $("#mediopago").click(function () {
+        var check = $("#mediopago").is(":checked");
+        if (check) {
+          $("#emisor").prop("checked", false);
+          $("#tipoevento").prop("checked", false);
+          limpiarLienzo("Medios de pago");
+          dibujarGrafica("mediopago");
+        }
+      });
+    });
+
+    function limpiarLienzo(text) {
+      $("h2").replaceWith(`<h2>${text}</h2>`);
+      $("canvas").remove();
+      $("#container").append(
+        `<canvas id="myChart" width="400" height="400"></canvas>`
+      );
+    }
+
+    function dibujarGrafica(type) {
       $.getJSON("data.json", function (data) {
-        const { labels, datasets, colors } = llenarArrays(data, "emisor");
+        const { labels, datasets, colors } = llenarArrays(data, type);
         const ctx = document.getElementById("myChart").getContext("2d");
         const myChart = new Chart(ctx, {
           type: "pie",
@@ -45,7 +91,7 @@
           },
         });
       });
-    });
+    }
 
     function llenarArrays(data, type) {
       var labels = [];
