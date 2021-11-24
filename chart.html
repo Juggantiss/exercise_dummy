@@ -22,38 +22,23 @@
       style="display: flex; width: 500px; height: 500px; flex-direction: column"
       id="chart_section"
     >
-      <h2>Cantidad de emisores</h2>
+      <h2></h2>
       <canvas id="myChart" width="400" height="400"></canvas>
     </section>
   </body>
   <script type="text/javascript">
-    var datos = [];
-    var colors = [];
     $(document).ready(function (e) {
+      $("h2").append("Emisores");
       $.getJSON("data.json", function (data) {
-        var emisores = [];
-        data.forEach((element) => {
-          const { emisor } = element;
-          if (!emisores.includes(emisor)) {
-            emisores.push(emisor);
-            colors.push(colorRGB());
-            datos = [
-              ...datos,
-              {
-                id: emisor,
-                value: obtenerCantidad(emisor, data),
-              },
-            ];
-          }
-        });
+        const { labels, datasets, colors } = llenarArrays(data, "emisor");
         const ctx = document.getElementById("myChart").getContext("2d");
         const myChart = new Chart(ctx, {
           type: "pie",
           data: {
-            labels: emisores,
+            labels,
             datasets: [
               {
-                data: datos,
+                data: datasets,
                 backgroundColor: colors,
               },
             ],
@@ -62,8 +47,40 @@
       });
     });
 
-    function obtenerCantidad(emisor, data) {
-      const cantidad = data.filter((element) => element.emisor === emisor);
+    function llenarArrays(data, type) {
+      var labels = [];
+      var datasets = [];
+      var colors = [];
+      data.forEach((element) => {
+        const elem =
+          type === "emisor"
+            ? element.emisor
+            : type === "tipoevento"
+            ? element.tipoevento
+            : type === "mediopago" && element.mediopago;
+        if (!labels.includes(elem)) {
+          labels.push(elem);
+          colors.push(colorRGB());
+          datasets = [
+            ...datasets,
+            {
+              id: elem,
+              value: obtenerCantidad(elem, data, type),
+            },
+          ];
+        }
+      });
+      return { labels, datasets, colors };
+    }
+
+    function obtenerCantidad(elem, data, type) {
+      const cantidad = data.filter((element) =>
+        type === "emisor"
+          ? element.emisor === elem
+          : type === "tipoevento"
+          ? element.tipoevento === elem
+          : type === "mediopago" && element.mediopago === elem
+      );
       return cantidad.length;
     }
 
