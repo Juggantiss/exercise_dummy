@@ -19,92 +19,68 @@
   </head>
   <body>
     <section
-      style="display: flex; width: 500px; height: 500px"
+      style="display: flex; width: 500px; height: 500px; flex-direction: column"
       id="chart_section"
     >
+      <h2>Cantidad de emisores</h2>
       <canvas id="myChart" width="400" height="400"></canvas>
     </section>
   </body>
   <script type="text/javascript">
     var datos = [];
+    var colors = [];
     $(document).ready(function (e) {
       $.getJSON("data.json", function (data) {
-        datos = data.slice();
+        var emisores = [];
+        data.forEach((element) => {
+          const { emisor } = element;
+          if (!emisores.includes(emisor)) {
+            emisores.push(emisor);
+            colors.push(colorRGB());
+            datos = [
+              ...datos,
+              {
+                id: emisor,
+                value: obtenerCantidad(emisor, data),
+              },
+            ];
+          }
+        });
+        const ctx = document.getElementById("myChart").getContext("2d");
+        const myChart = new Chart(ctx, {
+          type: "pie",
+          data: {
+            labels: emisores,
+            datasets: [
+              {
+                data: datos,
+                backgroundColor: colors,
+              },
+            ],
+          },
+        });
       });
     });
-    const ctx = document.getElementById("myChart").getContext("2d");
-    const data = [
-      { x: "Jan", net: 100, cogs: 50, gm: 50 },
-      { x: "Feb", net: 120, cogs: 55, gm: 75 },
-    ];
-    const myChart = new Chart(ctx, {
-      // type: "bar",
-      // data: {
-      //   labels: ["col1", "col2", "col3"],
-      //   datasets: [
-      //     {
-      //       label: "Num datos",
-      //       data: [10, 9, 7],
-      //       backgroundColor: [
-      //         "rgba(255, 99, 132, 0.2)",
-      //         "rgba(75, 192, 192, 0.2)",
-      //         "rgba(255, 206, 86, 0.2)",
-      //       ],
-      //     },
-      //   ],
-      //   options: {
-      //     scales: {
-      //       y: {
-      //         beginAtZero: true,
-      //       },
-      //     },
-      //   },
-      // },
-      // type: "line",
-      // data: {
-      //   labels: ["Sales", "Purchases"],
-      //   datasets: [
-      //     {
-      //       data: { Sales: 1500, Purchases: 500 },
-      //       backgroundColor: [
-      //         "rgba(255, 99, 132, 0.2)",
-      //         "rgba(75, 192, 192, 0.2)",
-      //       ],
-      //     },
-      //   ],
-      // },
-      // options: {
-      //   parsing: {
-      //     key: "nested.value",
-      //   },
-      // },
-      // type: "bar",
-      // data: {
-      //   labels: ["Jan", "Feb"],
-      //   datasets: [
-      //     {
-      //       label: "Net sales",
-      //       data: data,
-      //       parsing: {
-      //         yAxisKey: "net",
-      //       },
-      //     },
-      //     {
-      //       label: "Cost of goods sold",
-      //       data: data,
-      //       parsing: {
-      //         yAxisKey: "cogs",
-      //       },
-      //     },
-      //     {
-      //       label: "Gross margin",
-      //       data: data,
-      //       parsing: {
-      //         yAxisKey: "gm",
-      //       },
-      //     },
-      //   ],
-      // },
-    });
+
+    function obtenerCantidad(emisor, data) {
+      const cantidad = data.filter((element) => element.emisor === emisor);
+      return cantidad.length;
+    }
+
+    function generarNumero(numero) {
+      return (Math.random() * numero).toFixed(0);
+    }
+
+    function colorRGB() {
+      var coolor =
+        "(" +
+        generarNumero(255) +
+        "," +
+        generarNumero(255) +
+        "," +
+        generarNumero(255) +
+        ")";
+      return "rgb" + coolor;
+    }
   </script>
 </html>
