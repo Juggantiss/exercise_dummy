@@ -10,6 +10,7 @@
       language="javascript"
     ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.js"></script>
+    <link rel="stylesheet" href="css/chart.css" />
     <script
       type="text/javascript"
       language="javascript"
@@ -18,23 +19,23 @@
     <title>Grafico</title>
   </head>
   <body>
-    <section
-      style="display: flex; width: 500px; height: 580px; flex-direction: column"
-      id="chart_section"
-    >
-      <h2>Emisores</h2>
-      <div id="container">
-        <canvas id="myChart" width="500" height="500"></canvas>
-      </div>
-    </section>
-    <section>
-      <label for="emisor">Emisor</label>
-      <input type="checkbox" name="emisor" id="emisor" checked /><br />
-      <label for="tipoevento">Tipo de evento</label>
-      <input type="checkbox" name="tipoevento" id="tipoevento" /><br />
-      <label for="mediopago">Medio de pago</label>
-      <input type="checkbox" name="mediopago" id="mediopago" />
-    </section>
+    <div class="container">
+      <section id="chart_section">
+        <h2>Emisores</h2>
+        <div id="container">
+          <canvas id="myChart" width="580" height="580"></canvas>
+        </div>
+      </section>
+      <section class="container-check">
+        <label for="emisor">Emisor</label>
+        <input type="checkbox" name="emisor" id="emisor" checked /><br />
+        <label for="tipoevento">Tipo de evento</label>
+        <input type="checkbox" name="tipoevento" id="tipoevento" /><br />
+        <label for="mediopago">Medio de pago</label>
+        <input type="checkbox" name="mediopago" id="mediopago" />
+      </section>
+    </div>
+
     <script type="text/javascript" src="./js/chart.js"></script>
   </body>
 </html>

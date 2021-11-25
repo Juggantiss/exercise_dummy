@@ -1,0 +1,30 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.container {
+  display: flex;
+  width: 100vw;
+  height: 700px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h2 {
+  text-align: center;
+}
+
+.container-check {
+  margin-top: 10px;
+  display: flex;
+}
+
+.container-check input {
+  margin-left: 10px;
+  margin-right: 40px;
+}

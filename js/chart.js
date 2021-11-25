@@ -33,7 +33,7 @@ function limpiarLienzo(text) {
   $("h2").replaceWith(`<h2>${text}</h2>`);
   $("canvas").remove();
   $("#container").append(
-    `<canvas id="myChart" width="400" height="400"></canvas>`
+    `<canvas id="myChart" width="580" height="580"></canvas>`
   );
 }
 
