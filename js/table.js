@@ -275,7 +275,12 @@ $("#february").click(function () {
 function llenar(data) {
   $("#table_id").DataTable({
     destroy: true,
-    searching: false,
+    initComplete: function () {
+      var api = this.api();
+      api.$("td").click(function () {
+        api.search(this.innerHTML).draw();
+      });
+    },
     info: false,
     data: data,
     columns: [
