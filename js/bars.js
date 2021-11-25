@@ -3,32 +3,30 @@ $(document).ready(function (e) {
 });
 
 function dibujarGrafica() {
-  $.getJSON("data.json", function (data) {
-    const { labels, datasets, colors } = llenarArrays(data);
-    const ctx = document.getElementById("myChart").getContext("2d");
-    const myChart = new Chart(ctx, {
-      type: "bar",
-      data: {
-        labels,
-        datasets: [
-          {
-            label: "Uso de los tipos de emisores",
-            data: datasets,
-            backgroundColor: colors,
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
+  const { labels, datasets, colors } = llenarArrays(data);
+  const ctx = document.getElementById("myChart").getContext("2d");
+  const myChart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels,
+      datasets: [
+        {
+          label: "Uso de los tipos de emisores",
+          data: datasets,
+          backgroundColor: colors,
+          borderWidth: 1,
         },
-        responsive: true,
-        maintainAspectRatio: false,
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
       },
-    });
+      responsive: true,
+      maintainAspectRatio: false,
+    },
   });
 }
 
