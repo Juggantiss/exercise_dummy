@@ -11,13 +11,13 @@ function currentSlide(n) {
 
 function clickSlide(n) {
   if (n === 0) {
-    window.location = "/line.html";
+    window.location = "./line.html";
   }
   if (n === 1) {
-    window.location = "/chart.html";
+    window.location = "./chart.html";
   }
   if (n === 2) {
-    window.location = "/bars.html";
+    window.location = "./bars.html";
   }
 }
 
