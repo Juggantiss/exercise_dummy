@@ -1,14 +1,24 @@
 var slideIndex = 1;
 showSlides(slideIndex);
 
-// Next/previous controls
 function plusSlides(n) {
   showSlides((slideIndex += n));
 }
 
-// Thumbnail image controls
 function currentSlide(n) {
   showSlides((slideIndex = n));
+}
+
+function clickSlide(n) {
+  if (n === 0) {
+    window.location = "/line.html";
+  }
+  if (n === 1) {
+    window.location = "/chart.html";
+  }
+  if (n === 2) {
+    alert("Me han presionado barras");
+  }
 }
 
 function showSlides(n) {
