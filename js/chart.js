@@ -38,25 +38,23 @@ function limpiarLienzo(text) {
 }
 
 function dibujarGrafica(type) {
-  $.getJSON("data.json", function (data) {
-    const { labels, datasets, colors } = llenarArrays(data, type);
-    const ctx = document.getElementById("myChart").getContext("2d");
-    const myChart = new Chart(ctx, {
-      type: "pie",
-      data: {
-        labels,
-        datasets: [
-          {
-            data: datasets,
-            backgroundColor: colors,
-          },
-        ],
-      },
-    });
+  const { labels, datasets, colors } = llenarArrays(type);
+  const ctx = document.getElementById("myChart").getContext("2d");
+  const myChart = new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels,
+      datasets: [
+        {
+          data: datasets,
+          backgroundColor: colors,
+        },
+      ],
+    },
   });
 }
 
-function llenarArrays(data, type) {
+function llenarArrays(type) {
   var labels = [];
   var datasets = [];
   var colors = [];
@@ -74,7 +72,7 @@ function llenarArrays(data, type) {
         ...datasets,
         {
           id: elem,
-          value: obtenerCantidad(elem, data, type),
+          value: obtenerCantidad(elem, type),
         },
       ];
     }
@@ -82,7 +80,7 @@ function llenarArrays(data, type) {
   return { labels, datasets, colors };
 }
 
-function obtenerCantidad(elem, data, type) {
+function obtenerCantidad(elem, type) {
   const cantidad = data.filter((element) =>
     type === "emisor"
       ? element.emisor === elem
