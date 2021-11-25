@@ -1,9 +1,11 @@
 var datos = [];
 $(document).ready(function (e) {
-  $.getJSON("data.json", function (data) {
-    datos = data.slice();
-    llenar(data);
-  });
+  // $.getJSON("data.json", function (data) {
+  //   datos = data.slice();
+  //   llenar(data);
+  // });
+  datos = data.slice();
+  llenar(data);
 });
 // Metodos de pago
 $("#allmethod").click(function () {
