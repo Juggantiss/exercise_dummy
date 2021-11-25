@@ -17,7 +17,7 @@ function clickSlide(n) {
     window.location = "/chart.html";
   }
   if (n === 2) {
-    alert("Me han presionado barras");
+    window.location = "/bars.html";
   }
 }
 
