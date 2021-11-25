@@ -1,0 +1,24 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.container-check {
+  display: flex;
+  width: 100vw;
+  justify-content: center;
+  flex-direction: row;
+  margin-top: 15px;
+}
+
+input {
+  margin-top: 10px;
+}
+
+.container-check section {
+  margin-right: 30px;
+  margin-top: 10px;
+}
