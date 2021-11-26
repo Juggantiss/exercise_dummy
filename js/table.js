@@ -281,6 +281,7 @@ function llenar(data) {
         api.search(this.innerHTML).draw();
       });
     },
+    ordering: false,
     info: false,
     data: data,
     columns: [
