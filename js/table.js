@@ -273,7 +273,7 @@ $("#february").click(function () {
 //   console.log($(this)[0].id);
 // });
 function llenar(data) {
-  $("#table_id").DataTable({
+  var table = $("#table_id").DataTable({
     destroy: true,
     initComplete: function () {
       var api = this.api();
@@ -325,5 +325,16 @@ function llenar(data) {
         data: "total",
       },
     ],
+  });
+
+  $("#table_id thead tr").clone(true).appendTo("#table_id thead");
+  $("#table_id thead tr:eq(1) th").each(function (i) {
+    var title = $(this).text();
+    $(this).html('<input type="text" placeholder="Buscar ' + title + '"/>');
+    $("input", this).on("keyup change", function () {
+      if (table.columns(i).search() !== this.value) {
+        table.column(i).search(this.value).draw();
+      }
+    });
   });
 }
